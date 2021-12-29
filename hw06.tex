@@ -1,0 +1,131 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK06}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        计算下列积分
+        \begin{itemize}
+            \item[(1)] ~$\oint_{|z|=2}\frac{\sin z}{z^4}\ dz$~
+            \item[(2)] ~$\oint_{|\xi|=2}\frac{\bar{\xi}^2e^{\xi}}{\xi-z}\ d\xi$~, 其中~$z\neq 0, |z|\leq 2$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] \begin{equation*}
+                \oint_{|z|=2}\frac{\sin z}{z^4}\ dz = \frac{2\pi i}{3!}\sin^{(3)}(z)\bigg|_{z=0} = -\frac{\pi i}{3}            
+            \end{equation*}
+            \item[(2)] ~$\bar{\xi} = \frac{|\xi|^2}{\xi} = \frac{4}{\xi}$~, 所以有
+            \begin{align*}
+                \oint_{|\xi|=2}\frac{\bar{\xi}^2e^{\xi}}{\xi-z}\ d\xi &= \oint_{|\xi|=2}\frac{16e^{\xi}}{(\xi-z)\xi^2}\ d\xi \\
+                &= \oint_{|\xi|=\epsilon} + \oint_{|\xi-z|=\epsilon}\frac{16e^{\xi}}{(\xi-z)\xi^2}\ d\xi\\
+                &= 2\pi i\left(\frac{16e^{\xi}}{\xi-z}\right)^{'}\bigg|_{\xi=0} + 2\pi i \frac{16e^{\xi}}{\xi^2}\bigg|_{\xi=z}\\
+                &= \frac{32\pi i}{z^2}(e^z-z-1)
+            \end{align*}
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{2}
+        ~$a$~取何值时，函数
+        \begin{equation*}
+            F(z) = \int_{z_0}^ze^z(\frac{1}{z} + \frac{a}{z^3})\ dz
+        \end{equation*}
+        是单值函数
+    \end{problem}
+    \begin{solution}
+        ~$F(z)$~是单值函数说明上述积分的值与路径无关, 则沿着过~$z, z_0$~的闭曲线的积分的值应该为0, 若原点在该积分曲线内部
+        \begin{equation*}
+            \int_{z_0}^ze^z(\frac{1}{z} + \frac{a}{z^3})\ dz = 2\pi i e^0 + a\frac{2\pi i}{2!}e^0 = 0
+        \end{equation*}
+        显然有~$a = -2$~.
+    \end{solution}
+
+    \begin{problem}{3}
+        确定下列级数的收敛区域
+        \begin{itemize}
+            \item[(1)] ~$\sum\limits_{n=1}^{\infty}z^{n!}$~
+            \item[(2)] ~$\sum\limits_{n=1}^{\infty}(-1)^n(z^2+2z+1)^n$~
+            \item[(3)] ~$\sum\limits_{n=1}^{\infty}2^n\sin\frac{z}{3^n}$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] 由收敛的必要条件, ~$\lim\limits_{n\to\infty}z^{n!} = 0 \Rightarrow |z| < 1$~. 由d'Alembert判别法
+            \begin{equation*}
+                \lim\limits_{n\to\infty}\left|\frac{z^{(n+1)!}}{z^{n!}}\right| = \lim\limits_{n\to\infty}\left|z^{(n+1)}\right| \to 0 
+            \end{equation*}
+            所以级数的收敛区域为~$|z|<1$~
+            \item[(2)] 由收敛的必要条件, ~$\lim\limits_{n\to\infty}(-1)^n(z^2+2z+1)^n = 0 \Rightarrow |z+1| < 1$~. 由Cauchy判别法可验证收敛区域为~$|z+1| < 1$~
+            \item[(3)] 利用d'Alembert判别法
+            \begin{equation*}
+                \lim\limits_{n\to\infty}\left|\frac{\sin\frac{z}{3^{(n+1)}}}{\sin\frac{z}{3^n}}\right| = \frac{2}{3} < 1
+            \end{equation*}
+            所以级数的收敛域为整个复平面.
+        \end{itemize} 
+    \end{solution}
+    
+    \begin{problem}{4}
+        确定下列幂级数的收敛半径
+        \begin{itemize}
+            \item[(1)] ~$\sum\limits_{n=1}^{\infty}(1-\frac{1}{n})^nz^n$
+            \item[(2)] ~$\sum\limits_{n=1}^{\infty}[2+(-1)^n]^nz^n$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)]
+            \begin{equation*}
+                \lim\limits_{n\to\infty}(1-\frac{1}{n}) = 1 \Rightarrow R = 1
+            \end{equation*}
+             \item[(2)]
+            \begin{equation*}
+                \limsup\limits_{n\to\infty}[2 + (-1)^n] = 3 \Rightarrow R = \frac{1}{3}
+            \end{equation*}           
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{5}
+        判断级数~$\sum\limits_{n=1}^{\infty}\frac{(-1)^n}{n}\frac{1-z^n}{1+z^n}$~在单位圆~$|z|<1$~内是否绝对收敛.
+    \end{problem}
+    \begin{solution}
+    ~$n$~充分大时, 
+        \begin{equation*}
+            \left|\frac{(-1)^n}{n}\frac{1-z^n}{1+z^n}\right| = \frac{1}{n}\frac{|1-z^n|}{|1+z^n|} \geq \frac{1}{n}\frac{1 - |z|^n}{2}  \geq \frac{1}{4n}
+        \end{equation*}
+        ~$\sum_{n=1}^{\infty}\frac{1}{n}$~发散, 所以原级数不绝对收敛.
+    \end{solution}
+\end{document}

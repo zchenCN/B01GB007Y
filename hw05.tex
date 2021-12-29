@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK05}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        计算下列积分
+        \item [(1)] ~$\oint_l\frac{1}{z^2-1}\sin\frac{\pi z}{4}\ dz$~, 其中~$l$~分别为~$a. |z-1|=1, b. |z|=R, R\rightarrow \infty$~
+        \item [(2)] ~$\oint_l\frac{1}{z^2+1}e^{iz}\ dz$~, 其中~$l$~分别为
+        \begin{itemize}
+            \item [a.] ~$|z+i| + |z-i| = 2\sqrt{2}$~
+            \item [b.] ~$|z|=2$~
+            \item [c.] 闭合曲线~$r=3-\sin^2\frac{\theta}{4}$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        记以~$l$~为边界的区域为G.
+        \begin{itemize}
+            \item[(1)]
+                    \begin{itemize}
+            \item[a.] 令~$f(z) = \frac{1}{z+1}\sin\frac{\pi z}{4}$~，显然~$f(z)$~是G内的单值解析函数，由Cauchy积分公式
+            \begin{equation*}
+                \oint_l\frac{1}{z^2-1}\sin\frac{\pi z}{4}\ dz = \oint_l\frac{f(z)}{z-1}\ dz = 2\pi i f(1) = \frac{\sqrt{2}}{2}\pi i
+            \end{equation*}
+            \item[b.] 类似a，可以得到
+            \begin{equation*}
+                \oint_{|z+1|=1}\frac{1}{z^2-1}\sin\frac{\pi z}{4}\ dz = 2\pi i \frac{1}{z-1}\sin\frac{\pi z}{4}\bigg|_{z=-1} = \frac{\sqrt{2}}{2}\pi i
+            \end{equation*}
+            当R充分大时，由多连通域的Cauchy定理
+            \begin{equation*}
+                \oint_l\frac{1}{z^2-1}\sin\frac{\pi z}{4}\ dz = \oint_{|z-1|=1}+\oint_{|z+1|=1}\frac{1}{z^2-1}\sin\frac{\pi z}{4}\ dz = \sqrt{2}\pi i
+            \end{equation*}
+        \end{itemize}
+        \item[(2)]
+            \begin{itemize}
+                \item[a.] 类似上小题的b
+                    \begin{align*}
+                        \oint_l\frac{1}{z^2+1}e^{iz}\ dz &= \oint_{|z+i|=\epsilon}+\oint_{|z-i|=\epsilon}\frac{1}{z^2+1}e^{iz} \ dz\\
+                        &= 2\pi i \frac{1}{z+i}e^{iz}\bigg|_{z=i} + 2\pi i \frac{1}{z-i}e^{iz}\bigg|_{z=-i}\\
+                        &= \pi e^{-1} - \pi e\\
+                        &= \pi(e^{-1} - e)
+                    \end{align*}
+                \item[b] 同上
+                \item[c] 曲线如图\ref{fig1}. 可视作分别在內外部的简单闭曲线上积分再求和，所以积分结果为~$2\pi(e^-1-e)$~
+            \end{itemize}
+        \end{itemize}
+    \end{solution}
+    \newpage
+    \begin{problem}{2}
+        计算下列积分：
+        \begin{itemize}
+            \item [(1)] ~$\oint_{|z|=2}\frac{dz}{z^2(z^2+16)}$~
+            \item [(2)] ~$\oint_l\frac{\cos\pi z}{(z-1)^5}\ dz, l:|z|=a, a>1$~
+            \item [(3)] ~$\frac{1}{2\pi i}\oint_l\frac{e^z}{z(1-z)^3}\ dz,$~ ~$z=0, 1$~均在~$l$~内
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] 令~$f(z) = \frac{1}{z^2+16}$~，由高阶导数公式
+            \begin{equation*}
+                \oint_{|z|=2}\frac{dz}{z^2+16} = \oint_{|z|=2}\frac{f(z)}{z^2}\ dz = 2\pi if^{'}(0) = 0
+            \end{equation*}
+            \item[(2)] 由高阶导数公式
+            \begin{equation*}
+                \oint_l\frac{\cos\pi z}{(z-1)^5}\ dz = \frac{2\pi i}{4!}(\cos\pi z)^{(4)}\bigg|_{z=1} = -\frac{\pi^5i}{12}
+            \end{equation*}
+            \item[(3)]令~$f_1(z) = \frac{e^z}{(1-z)^3}, f_2(z) = \frac{e^z}{z}$~
+            \begin{align*}
+                \oint_l\frac{e^z}{z(1-z)^3}\ dz &= \oint_{|z|=\epsilon} + \oint_{|z-1|=\epsilon}\frac{e^z}{z(1-z)^5}\ dz\\
+                &= \oint_{|z|=\epsilon}\frac{f_1(z)}{z}\ dz + \oint_{|z-1|=\epsilon}\frac{f_2(z)}{-(z-1)^5}\ dz\\
+                &= 2\pi if_1(0) - \frac{2\pi i}{4!}f_2^{(4)}(1)\\
+                &= 2\pi i (1-\frac{e}{2})
+            \end{align*}
+            所以有~$\frac{1}{2\pi i}\oint_l\frac{e^z}{z(1-z)^3}\ dz = 1-\frac{e}{2} $~
+        \end{itemize}
+    \end{solution}
+    
+
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{images/curve.png}                \caption{~$r=3-\sin^2\frac{\theta}{4}$~}
+        \label{fig1}
+    \end{figure}
+\end{document}

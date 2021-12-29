@@ -1,0 +1,246 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK14}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        求解下列定界问题
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial^2u}{\partial t^2} = a^2 \frac{\partial^2u}{\partial x^2},\quad 0 < x < l, t > 0\\
+                    u(0, t) = \cos\frac{a\pi}{l}t, \quad \frac{\partial  u}{\partial x}(l, t) = 0\\
+                    u(x, 0) = \cos\frac{\pi}{l}x,\quad  \frac{\partial }{\partial t}u(x, 0) = \sin\frac{\pi}{2 l}x
+            \end{cases}+
+        \end{equation*}
+    \end{problem}
+    \begin{solution}
+    % \begin{itemize}
+    % \item[方法1：]
+    我们希望同时将方程和边界条件齐次化令$u(x, t) = w(x, t) + v(t, x)$, 设
+    $$ v(x, t) = f(x)\cos{\frac{a\pi}{l}t}$$
+    则有
+    \begin{equation*}
+        \begin{aligned}
+            \frac{\partial^2 w}{\partial t^2} & = \frac{\partial^2 u}{\partial t^2} - \frac{\partial^2 v}{\partial t^2}\\
+            &= a^2\frac{\partial^2 u}{\partial x^2} + f(x)\left(\frac{a\pi}{l}\right)^2\cos{\frac{a\pi}{l}t}\\
+        \end{aligned}
+    \end{equation*}
+    对比$$\frac{\partial^2 w}{\partial x^2} = \frac{\partial^2 u}{\partial x^2} - f^{''}(x)\cos{\frac{a\pi}{l}t}$$
+    令
+    $$ f^{''}(x) + \left(\frac{\pi}{l}\right)^2f(x) = 0$$
+    再由边界条件
+    $$ w(0, t) = u(0, t) - v(0, t) = \cos{\frac{a\pi}{l}t} - f(0)\cos{\frac{a\pi}{l}t}= 0$$
+    和
+    $$ \frac{\partial}{\partial x}w(l, t) = \frac{\partial}{\partial x}u(l, t) - f^{'}(l)\cos{\frac{a\pi}{l}t} = 0$$
+    令$$ f(0) = 1, \quad f^{'}(l) = 0$$ 
+    求解关于$f(x)$的常微分方程定解问题
+    \begin{equation*}
+        \begin{cases}
+                f^{''}(x) + \left(\frac{\pi}{l}\right)^2f(x) = 0\\
+                f(0) = 1, \quad f^{'}(l) = 0
+        \end{cases}
+    \end{equation*}
+    容易解得
+    $$ f(x) = \cos{\frac{\pi}{l}x}$$
+    那么容易得到关于$w(x, t )$的齐次方程
+    \begin{equation*}
+        \begin{cases}
+               \frac{\partial^2w}{\partial t^2} =   a^2\frac{\partial^2w}{\partial x^2} \\
+                 w(0, t) = 0, \quad \frac{\partial}{\partial x}w(l, t) = 0\\
+                 w(x, 0) = 0, \quad \frac{\partial}{\partial t}w(x, 0) = \sin\frac{\pi}{2 l}x
+        \end{cases}
+    \end{equation*}
+    利用本征值方法求解该方程，由边界条件可知对应本征函数集合为
+    $$ \sin\frac{(2n+1)\pi}{2l}x, \quad n= 0, 1, \cdots$$
+    设方程解有级数形式
+    $$ w(x, t) = \sum_{n\geq0}g_n(t)\sin\frac{(2n+1)\pi}{2l}x$$
+    其中$g_n(t)$应该满足
+    $$ g_n(t) = \frac{2}{l}\int_0^lw(x, t)\sin\frac{(2n+1)\pi}{2l}xdx$$
+    那么
+    \begin{gather*}
+        g_n(0) = \frac{2}{l}\int_0^lw(x, 0)\sin\frac{(2n+1)\pi}{2l}xdx = 0\\
+        g_n^{'}(0) = \frac{2}{l}\int_0^l\sin{\frac{\pi}{2l}x}\sin\frac{(2n+1)\pi}{2l}xdx = \delta_{0, n}
+    \end{gather*}
+    代入方程得到
+    $$ \sum_{n\geq0}\left[g_n^{''}(t) + \left(\frac{(2n+1)a\pi}{2l}\right)^2\right]\sin\frac{(2n+1)\pi}{2l}x = 0$$
+    可得关于$g_n(t)$的常微分方程定界问题
+    \begin{equation*}
+        \begin{cases}
+            g_n^{''}(t) + \left(\frac{(2n+1)a\pi}{2l}\right)^2g_n(t) = 0\\
+            g_n(0) = 0, \quad g_n^{'}(l) = \delta_{0, n}
+        \end{cases}
+    \end{equation*}
+    容易解得
+    \begin{equation*}
+        g_0(t) = \frac{2l}{a\pi}\sin{\frac{a\pi}{2l}t}\\
+        g_n(t) = 0, \quad n=1, 2, \cdots
+    \end{equation*}
+    所以可得
+    $$ u(x, t) = w(x, t) + v(x, t) = \frac{2l}{a\pi}\sin{\frac{a\pi}{2l}t}\sin{\frac{\pi}{2l}x} + \cos{\frac{\pi}{l}x}\cos{\frac{a\pi}{l}t}$$
+    \end{solution}
+    % \item[方法2]
+    %     令$v(x, t) = \cos\frac{a\pi}{l}t$, $w(x, t) = u(x, t) - v(x, t)$, 则容易验证$w$满足齐次边界条件
+    %     $$ w(0, t) = u(0, t) - v(0, t) = \cos\frac{a\pi}{l}t - \cos\frac{a\pi}{l}t = 0$$
+    %     和
+    %     $$ \frac{\partial}{\partial x}w(l, t) = \frac{\partial}{\partial x}u(l, t) - \frac{\partial}{\partial x}v(l, t) = 0 $$
+    %     同样的可以验证初始条件,
+    %     $$ w(x, 0) = u(x, 0) - v(x, 0) = \cos\frac{\pi}{l}x - 1$$
+    %     和
+    %     $$ \frac{\partial}{\partial t}w(x, 0) = \frac{\partial}{\partial t}u(x, 0) - \frac{\partial}{\partial t}v(x, 0) = \sin\frac{\pi}{2l}x$$
+    %     代入方程
+    %     \begin{equation*}
+    %         \begin{aligned}
+    %          \frac{\partial^2w}{\partial t^2} &= \frac{\partial^2u}{\partial t^2} - \frac{\partial^2v}{\partial t^2}\\
+    %          &= a^2\frac{\partial^2u}{\partial x^2} + \left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t\\
+    %          &= a^2\frac{\partial^2w}{\partial x^2} + \left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t
+    %         \end{aligned}
+    %     \end{equation*}
+    %     接下来我们使用本征函数法求解关于$w$的非齐次定界问题
+    %     \begin{equation*}
+    %         \begin{cases}
+    %              \frac{\partial^2w}{\partial t^2} =   a^2\frac{\partial^2w}{\partial x^2} + \left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t\\
+    %              w(0, t) = 0, \quad \frac{\partial}{\partial x}w(l, t) = 0\\
+    %              w(x, 0) = \cos\frac{\pi}{l}x - 1, \quad \frac{\partial}{\partial t}w(x, 0) = \sin\frac{\pi}{2l}x
+    %         \end{cases}
+    %     \end{equation*}
+    %     本征函数集由对应齐次方程和齐次边界条件构成, 写出形式解为
+    %     $$ w(x, t) = \sum_{n\geq0}g_n(t)\sin\frac{(2n+1)\pi}{2l}x$$
+    %     其中$g_n(t)$应该满足
+    %     $$ g_n(t) = \frac{2}{l}\int_0^lw(x, t)\sin\frac{(2n+1)\pi}{2l}xdx$$
+    %     那么容易有
+    %     \begin{gather*}
+    %         g_n(0) = \frac{2}{l}\int_0^l\left(\cos\frac{\pi}{l}x - 1\right)\sin\frac{(2n+1)\pi}{2l}xdx= \frac{16}{\pi(2n+1)(4n^2+4n-3)}\\
+    %         g_n^{'}(0) = \frac{2}{l}\int_0^l\left(\sin\frac{\pi}{2l}x\right)\sin\frac{(2n+1)\pi}{2l}xdx = \delta_{0, n}
+    %     \end{gather*}
+    %     代入方程得到
+    %     $$ \sum_{n\geq0}\left[g^{''}_n(t) + \left(\frac{(2n+1)a\pi}{2l}\right)^2g_n(t)\right]\sin\frac{(2n+1)\pi}{2l}x = \left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t$$
+    %     将上式右端也按本征函数展开
+    %     $$\left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t = \sum_{n\geq0}B_n\sin\frac{(2n+1)\pi}{2l}x $$
+    %     其中
+    %     $$ B_n(t) = \left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t\cdot\frac{2}{l}\int_0^l\sin\frac{(2n+1)\pi}{2l}xdx = \frac{4}{(2n+1)\pi}\left(\frac{a\pi}{l}\right)^2\cos\frac{a\pi}{l}t$$
+    %     得到关于$g_n(t)$的非齐次常微分方程
+    %     $$ g_n^{''}(t) + \left(\frac{(2n+1)a\pi}{2l}\right)^2g_n(t) =  B_n(t)$$
+    %     解得
+    %     $$ g_n(t) = C_n\cos\left(\frac{(2n+1)a\pi}{2l}\right)t + D_n\sin\left(\frac{(2n+1)a\pi}{2l}\right)t + \frac{16}{(2n-1)(2n+1)(2n+3)\pi}\cos\frac{a\pi}{l}t$$
+    %     代入
+    %     $$ g_n(0) = C_n + \frac{16}{(2n-1)(2n+1)(2n+3)\pi} = \frac{16}{\pi(2n+1)(4n^2+4n-3)}$$
+    %     解得$C_n = 0$
+    %     则
+    %     $$ g^{'}(0) = \frac{(2n+1)a\pi}{2l}D_n = \delta_{0, n}$$
+    %     解得
+    %     \begin{gather*}
+    %         D_0 = \frac{2l}{a\pi}\\
+    %         D_n = 0, \quad n=1, 2, \cdots
+    %     \end{gather*}
+    %     所以
+    %     $$ w(x, t) = \frac{2l}{a\pi}\sin{\frac{a\pi}{2l}t}\sin{\frac{\pi}{2l}x} + \sum_{n\geq1}$$
+    % \end{itemize}
+    % \end{solution}
+
+    \begin{problem}{2}
+        求解下列定界问题
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial u}{\partial t} = \kappa \frac{\partial^2 u}{\partial x^2},\quad 0 < x < l, t > 0\\
+                    u(0, t) = Ae^{-\alpha^2\kappa t}, \quad u(l, t) = Be^{-\beta^2\kappa t}\\
+                    u(x, 0) = 0
+            \end{cases}
+        \end{equation*}
+    \end{problem}
+    \begin{solution}
+    % 记$$ \phi(t) = Ae^{-\alpha^2\kappa t}, \quad \psi(t) = Be^{-\beta^2\kappa t}$$
+    % 做辅助函数
+    % $$ v(x, t) = \left(1-\frac{x}{l}\right)\phi(t) + \frac{x}{l}\psi(t)$$
+    % 则容易验证$w(x, t) = u(x, t) - v(x, t)$满足如下定解问题
+    % \begin{equation*}
+    %     \begin{cases}
+    %             \frac{\partial w}{\partial t} = \kappa \frac{\partial^2 w}{\partial x^2} - \frac{\partial v}{\partial t}\\
+    %             w(0, t) = w(l, t) = 0\\
+    %             w(x, 0) = -v(x, 0)
+    %     \end{cases}
+    % \end{equation*}
+    % 利用本征函数法, 假设解有如下形式
+    % $$ w(x, t) + $$
+    设辅助函数有如下形式
+    $$ v(x, t) = f(x)e^{-\alpha^2\kappa t} + g(x)e^{-\beta^2\kappa t}$$
+    我们希望$w(x, t) = u(x, t) - v(x, t)$同时满足齐次方程和齐次边界条件, 则
+    \begin{equation*}
+        \begin{aligned}
+            \frac{\partial w}{\partial t} &= \frac{\partial u}{\partial t} - \frac{\partial v}{\partial t}\\
+            &= \kappa \frac{\partial^2 u}{\partial x^2} -  \frac{\partial v}{\partial t}\\
+            &= \kappa \left[\frac{\partial^2 w}{\partial x^2} + \frac{\partial^2 v}{\partial x^2}\right] -  \frac{\partial v}{\partial t}\\
+            &= \kappa \frac{\partial^2 w}{\partial x^2} + \left(f^{''}(x) + \alpha^2f(x)\right)\kappa e^{-\alpha^2\kappa t} + \left(g^{''}(x) + \beta^2g(x)\right)\kappa e^{-\beta^2\kappa t}
+        \end{aligned}
+    \end{equation*}
+    令
+    \begin{gather*}
+        f^{''}(x) + \alpha^2f(x) = 0\\
+        g^{''}(x) + \beta^2g(x) = 0
+    \end{gather*}
+    再代入边界条件
+    \begin{gather*}
+        w(0, t) = Ae^{-\alpha^2\kappa t} - f(0)e^{-\alpha^2\kappa t} + g(0)e^{-\beta^2\kappa t}\\
+        w(l, t) = Be^{-\beta^2\kappa t} - f(l)e^{-\alpha^2\kappa t} + g(l)e^{-\beta^2\kappa t}
+    \end{gather*}
+    令
+    \begin{gather*}
+        f(0) = A, \quad f(l) = 0\\
+        g(0) = 0, \quad g(l) = B
+    \end{gather*}
+    解得
+    $$ f(x) = -A\frac{\sin(\alpha(x-l))}{\sin(\alpha l)}, \quad g(x) = B\frac{\sin(\beta x)}{\sin(\beta l)}$$
+    且$w$满足方程
+    \begin{equation*}
+        \begin{cases}
+                \frac{\partial w}{\partial t} = \kappa \frac{\partial^2 w}{\partial x^2}\\
+                u(0, t) = u(l, t) = 0\\
+                u(x, 0) = -f(x) - g(x)
+        \end{cases}
+    \end{equation*}
+    假设解有如下形式
+    $$ w(x, t) = \sum_{n\geq1}g_n(t)\sin{\frac{n\pi}{l}x}$$
+    代入方程得到关于$g_n(t)$的方程
+    $$ g_n^{'}(t) + \kappa \left(\frac{n\pi}{l}\right)^2g_n(t) = 0$$
+    解得
+    $$ g_n(t) = C_nexp\left\{-\kappa \left(\frac{n\pi}{l}\right)^2t\right\}$$
+    利用初始条件
+    $$ w(x, 0) = \sum_{n\geq1}C_n\sin{\frac{n\pi}{l}x} = -f(x) - g(x)$$
+    可以确定常数$C_n$
+    代回即可得原方程的解
+    $$ u(x, t) = -A\frac{\sin(\alpha(x-l))}{\sin(\alpha l)}e^{-\alpha^2\kappa t} +  B\frac{\sin(\beta x)}{\sin(\beta l)}e^{-\beta^2\kappa t} + \sum_{n\geq1}C_nexp\left\{-\kappa \left(\frac{n\pi}{l}\right)^2t\right\}\sin{\frac{n\pi}{l}x}$$
+    \end{solution}
+\end{document}

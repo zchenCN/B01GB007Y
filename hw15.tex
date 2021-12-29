@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK15}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        求解格林函数的定解问题的解$G(x; x_0)$
+        \begin{equation*}
+            \begin{cases}
+                    \frac{d^2G}{dx^2} = -\delta(x-x_0), \quad 0< x, x_0 < l\\
+                    G(0, x_0) = G(l, x_0) = 0
+            \end{cases}
+        \end{equation*}
+    \end{problem}
+    \begin{solution}
+        容易发现, 当$0 < x < x_0$和$x_0 < x < l$时, 都有$G^{''} = 0$, 利用边界条件, 容易有
+        \begin{equation*}
+        G(x, x_0) = 
+            \begin{cases}
+                ax, \quad 0 < x < x_0\\
+                b(x-l), \quad x_0 < x < l
+            \end{cases}
+        \end{equation*}
+        接下来利用$\delta$函数的选值的性质来确定待定常数, 对任意在$(0, l)$区间外为0的函数$f(x)$
+        \begin{equation*}
+            \begin{aligned}
+                    f(x_0) & =\int_0^l\delta(x-x_0)f(x)dx  \\
+                    &= \int_0^l-G^{''}f(x)dx\\
+                    &= -\int_0^lG(x, x_0)f^{''}(x)dx\\
+                    &= -\int_0^{x_0}axf^{''}(x)dx - \int_{x_0}^lb(x-l)f^{''}(x)dx\\
+                    &= -\left(ax_0f^{'}(x_0) - af(x_0) + af(0)\right) - \left(-b(x_0-l)f^{'}(x_0) - bf(l) + bf(x_0)\right)\\
+                    &= (a-b)f(x_0) - (a-b)x_0f^{'}(x_0) - blf^{'}(x_0)
+            \end{aligned}
+        \end{equation*}
+        得到$$a = \frac{l-x_0}{l}, b=\frac{-x_0}{l}$$
+        所以
+         \begin{equation*}
+        G(x, x_0) = 
+            \begin{cases}
+                \frac{(l-x_0)x}{l}, \quad 0 < x < x_0\\
+                \frac{x_0(l-x)}{l}, \quad x_0 < x < l
+            \end{cases}
+        \end{equation*}      
+    \end{solution}
+
+    \begin{problem}{2}
+        用格林函数法求解圆的狄利克莱问题
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} = -xy, \quad r < a\\
+                    u|_{r=a} = 0
+            \end{cases}
+        \end{equation*}
+    \end{problem}
+    
+    \begin{solution}
+        有二维拉普拉斯方程的基本解
+        \begin{equation*}
+            \Gamma(r, x_0) = \frac{1}{2\pi}\ln{r}, \quad r = |x-x_0|
+        \end{equation*}
+        我们利用镜像法来求解二维拉普拉斯方程齐次狄利克雷边界条件的格林函数, 即
+        \begin{equation*}
+            \begin{aligned}
+                \nabla^2 G(x, x_0) = \delta(x - x_0)\\
+                G(x, x_0) = 0, \quad |x-x_0| = a
+            \end{aligned}
+        \end{equation*}
+        我们在$x_0$的对称点$x^{*} = \frac{a^2 }{|x_0|}x_0$处放置一个汇，
+        考虑问题
+        $$ \nabla^2 u = \delta(x-x_0) - \delta(x - x^{*})$$
+        显然当$|x| < a$时, $\nabla^2 u = \delta(x-x_0)$
+        易知$$ u = \frac{1}{2\pi}ln{|x-x_0|} - \frac{1}{2\pi}ln{|x-x^{*}|} + c$$
+        为满足边界条件
+        $$c = \frac{1}{2\pi}ln{|x-x^{*}|} - \frac{1}{2\pi}ln{|x-x_0|} = \frac{1}{2\pi}\ln{\frac{a}{|x_0|}}$$
+        其中
+        $$ |x-x^{*}|^2 = a^2 + |x^{*}|^2 - 2x\cdot x^{*} = \frac{a^2}{|x_0|^2}\left(|x_0|^2 + a^2 - 2x\cdot x_0\right) = \frac{a^2}{|x_0|^2}|x-x_0|^2$$
+        所以得到格林函数
+        $$ G(x, x_0) = \frac{1}{2\pi}ln{|x-x_0|} - \frac{1}{2\pi}\ln{|x-x^{*}|} + \frac{1}{2\pi}\ln{\frac{a}{|x_0|}}$$
+        利用格林表示公式
+        $$ u(x, y) = \iint_{r<a}G(x, x_0)(-x_0y_0)dx_0dy_0$$
+    \end{solution}
+\end{document}

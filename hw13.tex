@@ -1,0 +1,289 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK13}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+    用分离变量法求解下列定界问题
+    \begin{problem}{1}
+    \begin{equation*}
+       \begin{cases}
+           \frac{\partial^2 u}{\partial t^2} = a^2\frac{\partial^2 u}{\partial x^2}, \quad x\in(0, \pi), \quad t>0\\
+           u(x, 0) = 3\sin x, \frac{\partial u}{\partial t}(x, 0) = 0, \quad x \in [0, \pi]\\
+           u(0, t) = u(\pi, t) = 0
+       \end{cases}      
+    \end{equation*}
+    \end{problem}
+    \begin{solution}
+        假设方程有分离变量形式得解
+        $$u(x, t) = X(x)T(t)$$
+        代入原方程得$$ X(x)T^{''}(t) = a^2X^{''}(x)T(t)$$
+        两边同时除以$X(x)T(t)$, 得
+        $$ \frac{X^{''}(x)}{X(x)} = \frac{T^{''}(t)}{a^2T(t)}$$
+        上式两边对$x$求导数得
+        $$ \frac{d}{dx}\left[\frac{X^{''}(x)}{X(x)}\right] = \frac{d}{dx}\left[\frac{T^{''}(t)}{a^T(t)}\right] = 0$$
+        所以有
+        $$ \frac{X^{''}(x)}{X(x)} = \frac{T^{''}(t)}{a^2T(t)} = constant$$
+        假设这个常数为$-\lambda$, 我们可以得到两个二阶常系数常微分方程
+        \begin{equation*}
+            \begin{aligned}
+                X^{''}(x) + \lambda X(x) = 0\\
+                T^{''}(t) + \lambda a^2T(t) = 0
+            \end{aligned}
+        \end{equation*}
+        考察边界条件得到
+        $$ X(0)T(t) = X(\pi)T(t) = 0$$
+        不考虑平凡解, 得到
+        $$ X(0) = X(\pi) = 0$$
+        所以$X(x)$构成如下定解问题
+        $$
+        \begin{cases}
+            X^{''}(x) + \lambda X(x) = 0\\
+            X(0) = X(\pi) = 0
+        \end{cases}
+        $$
+        对$\lambda$分三种情况讨论
+        \begin{itemize}
+            \item[(1)]$\lambda = 0$, 这时$X(x) = Ax + B$, 其中$A, B$为常数. 代入边界条件得$A = B = 0$, 此时$u(x, t) \equiv 0$.
+            \item[(2)]$\lambda < 0$, 此时$X(x) = A\sinh{kx} + B\cosh{kx}, k=\sqrt{-\lambda}$. 代入边界条件$X(0) = B = 0$, $X(\pi) = A\sinh{k\pi} = 0$, 所以$A = 0$, 此时$u(x, t) \equiv 0$是平凡解.
+            \item[(3)]$\lambda > 0$, 此时$X(x) = A\sin{kx} + B\cos{kx}, k=\sqrt{\lambda}$. 代入边界条件$X(0) = B = 0$, 所以$X(\pi) = A\sin{k\pi} = 0$, 则排除平凡解的情况, $$ \sin{k\pi} = 0$$
+            故$$ k = k_n = n, \quad \lambda = \lambda_n = n^2, \quad n=1, 2, \cdots$$
+        \end{itemize}
+        得到
+        $$ X(x) = X_n(x) = B_n\sin{nx}$$
+        现在讨论时间函数的方程
+        $$ T^{''}(t) + (na)^2T(t) = 0 $$
+        它的通解为
+        $$ T_n(t) = c_n\sin{nat} + d_n\cos{nat}$$
+        所以可以得到满足原方程边界条件的解
+        $$ u_n(x, t) = \left(C_n\sin{nat} + D_n\cos{nat}\right)\sin{nx}$$
+        其中常数$C_n = c_nB_n, D_n = d_nB_n$. 根据叠加原理
+        $$u(x, t) = \sum_{n=1}^{\infty}u_n(x, t) =  \sum_{n=1}^{\infty}\left(C_n\sin{nat} + D_n\cos{nat}\right)\sin{nx}$$
+        且
+        $$\frac{\partial u(x, t)}{\partial t} =  \sum_{n=1}^{\infty}na\left(C_n\cos{nat} - D_n\sin{nat}\right)\sin{nx}$$
+        接下来我们根据初始条件确定常数$C_n, D_n.$
+        $$ \frac{\partial u}{\partial t}(x, 0) = \sum_{n=1}^{\infty}naC_n\sin{nx} = 0$$
+        所以$C_n = 0$, 则
+        $$ u(x, 0) = \sum_{n=1}^{\infty}D_n\sin{nx} = 3\sin{x}$$
+        所以$D_1 = 3, D_k = 0, k\neq 1.$ 故
+        $$ u(x, t) = \sum_{n=1}^{\infty}u_n(x, t) = 3\cos{at}\sin{x}$$
+    \end{solution}
+    
+    \begin{problem}{2}
+    \begin{equation*}
+       \begin{cases}
+           \frac{\partial^2 u}{\partial x^2} +  \frac{\partial^2 u}{\partial y^2} = 0, \quad (x, y)\in[0, a]\times[0, b]\\
+           u(0, y) = u_0, u(a, y) = u_0\left[3(\frac{y}{b})^2 - 2(\frac{y}{b})^3\right]\\
+           \frac{\partial u}{\partial y}(x, 0) = \frac{\partial u}{\partial y}(x, b) = 0 
+       \end{cases}      
+    \end{equation*}
+    \end{problem}   
+    \begin{solution}
+        和上题类似, 我们可以得到两个二阶常系数常微分方程
+        \begin{equation*}
+            \begin{aligned}
+                X^{''}(x) - \lambda X(x) = 0\\
+                T^{''}(t) + \lambda T(t) = 0
+            \end{aligned}
+        \end{equation*}
+        由边界条件, 我们得定解问题
+        $$
+        \begin{cases}
+            Y^{''}(y) + \lambda Y(y) = 0\\
+            Y^{'}(0) = Y^{'}(b) = 0
+        \end{cases}
+        $$
+        对$\lambda$分三种情况讨论
+        \begin{itemize}
+            \item[(1)]$\lambda = 0$, 这时$Y(y) = Ay + B, Y^{'}(y) = A$, 其中$A, B$为常数. 代入边界条件得$A = 0$, 此时$ Y_0 \equiv B_0$.
+            \item[(2)]$\lambda < 0$, 此时$Y(y) = A\sinh{ky} + B\cosh{ky}, Y^{'}(y) = A\cosh{ky} + B\sinh{ky}, k=\sqrt{-\lambda}$. 代入边界条件$Y^{'}(0) = A = 0$, $Y^{'}(b) = B\sinh{kb} = 0$, 得$B=0$, 此时$u(x, t) \equiv 0$是平凡解.
+            \item[(3)]$\lambda > 0$, 此时$Y(y) = A\sin{ky} + B\cos{ky},Y^{'}(y) = A\cos{ky} - B\sin{ky}, k=\sqrt{\lambda}$. 代入边界条件$Y^{'}(0) = A = 0$,
+            $Y^{'}(b) = -B\sin{kb} = 0$, 排除平凡解的情况, $$ \sin{kb} = 0$$
+            故$$ k = k_n = \frac{n\pi}{b}, \quad \lambda = \lambda_n = \left(\frac{n\pi}{b}\right)^2, \quad n=0, 1, 2, \cdots$$
+        \end{itemize}        
+        得到关于$Y$的解
+        \begin{gather*}
+            Y(y) = Y_n = B_n, \quad n = 0 \\
+            Y(y) = Y_n(y) = B_n\cos{\frac{n\pi}{b}y}, \quad n=1, 2, \cdots
+        \end{gather*} 
+        接下来求解关于$X$的方程
+        $$ X^{''}(x) - \left(\frac{n\pi}{b}\right)^2 X(x) = 0$$
+        \begin{gather*}
+            X_0(x) = c_0x + d_0\\
+            X_n(x) = c_n\sinh{\frac{n\pi}{b}x} + d_n\cosh{\frac{n\pi}{b}x}, n=1, 2, \cdots
+        \end{gather*}
+        最后根据叠加原理得到满足原方程的解
+        根据叠加原理
+        $$ u(x, y) = (C_0+D_0x) + \sum_{n=1}^{\infty}\left(C_n\sinh{\frac{n\pi}{b}x} + D_n\cosh{\frac{n\pi}{b}x}\right)\cos{\frac{n\pi}{b}y}$$
+        代入边界条件
+        $$ u(0, y) = C_0 + \sum_{n=1}^{\infty}D_n\cos\frac{n\pi}{b}y = u_0$$
+        所以$C_0 = u_0, D_n = 0, n=1, 2, \cdots$.
+        $$ u(a, y) = C_0 + D_0a + \sum_{n=1}^{\infty}C_n\sinh{\frac{n\pi}{b}a}\cos{\frac{n\pi}{b}y} = u_0\left[3(\frac{y}{b})^2 - 2(\frac{y}{b})^3\right]$$
+        $u_0\left[3(\frac{y}{b})^2 - 2(\frac{y}{b})^3\right]$有半幅傅里叶级数
+        $$ u_0\left[3(\frac{y}{b})^2 - 2(\frac{y}{b})^3\right] = E_0 + \sum_{n=1}^{\infty}E_n\cos{\frac{n\pi}{b}y}$$
+        其中
+        $$
+            E_0 = \frac{1}{b}\int_0^bu_0\left[3(\frac{y}{b})^2 - 2(\frac{y}{b})^3\right]\ dy = \frac{u_0}{2}
+        $$
+        以及
+        \begin{equation*}
+                E_n = \frac{2}{b}\int_0^bu_0\left[3(\frac{y}{b})^2 - 2(\frac{y}{b})^3\right]\cos\frac{n\pi y}{b}\ dy\\
+        \end{equation*}
+        对比得
+        $$ D_0 = -\frac{u_0}{2a}, \quad C_n = \frac{E_n}{\sinh{\frac{n\pi a}{b}}}$$
+    \end{solution}
+    
+    \begin{problem}{3}
+    \begin{equation*}
+        \begin{cases}
+           \frac{\partial^2 u}{\partial t^2} - a^2\frac{\partial^2 u}{\partial x^2} =  bx(l-x) \quad x\in(0, l), \quad t>0\\
+           u(0, t) = u(l, t) = 0\\
+           u(x, 0) = \frac{\partial u}{\partial t}(x, 0) = 0
+        \end{cases}      
+    \end{equation*}
+    \end{problem}
+    % \begin{solution}
+    %     令$w$满足如下方程
+    %     \begin{equation*}
+    %     \begin{cases}
+    %       \frac{\partial^2 w}{\partial t^2} - a^2\frac{\partial^2 w}{\partial x^2} =0 \quad x\in(0, l), \quad t>\tau\\
+    %       w(0, t) = w(l, t) = 0\\
+    %       w(x, \tau;\tau) = 0, \frac{\partial w}{\partial t}(x, \tau; \tau) =   6x(l-x)
+    %     \end{cases}      
+    % \end{equation*}
+    % 令$u(x, t) = \int_0^tw(x, t, \tau)\ d\tau$
+    % 则容易验证$u$满足初边值条件且
+    % \begin{gather*}
+    %     u_t(x, t) = w(x, t, t) + \int_0^tw_t(x, t, \tau)\ d\tau = \int_0^tw_t(x, t, \tau)\ d\tau\\
+    %     u_{tt} = w_t(x, t, t) + \int_0^tw_{tt}(x, t, \tau)\ d\tau = 6x(l-x) + \int_0^tw_{tt}(x, t, \tau)\ d\tau
+    % \end{gather*}
+    % 容易验证$u$是原方程的解. 作变换$s = t-\tau, v(x, s, \tau) = w(x, t-\tau, \tau)$
+    % 则$v$满足方程
+    % \begin{equation*}
+    %     \begin{cases}
+    %       \frac{\partial^2 v}{\partial s^2} - a^2\frac{\partial^2 v}{\partial x^2} =0 \quad x\in(0, l), \quad s>0\\
+    %       v(0, s) = v(l, s) = 0\\
+    %       v(x, 0;\tau) = 0, \frac{\partial v}{\partial t}(x, 0; \tau) =   6x(l-x)
+    %     \end{cases}      
+    % \end{equation*}   
+    % 同样的用分离变量法求解得到$v$
+    % 则
+    % $$
+    % u(x, t) = \int_0^tw(x, t, \tau)\ d\tau = \int_0^tv(x, t+\tau, \tau)\ d\tau 
+    % $$
+    % \end{solution}
+    \begin{solution}
+        令$v(x)$满足定解问题
+        \begin{equation*}
+            \begin{cases}
+                -a^2v^{''}(x) = bx(l-x)\\
+                v(0) = v(l) = 0
+            \end{cases}
+        \end{equation*}
+        容易解得
+        $$ v(x) = \frac{b}{12a^2}x^4 - \frac{bl}{6a^2}x^3 + \frac{bl^3}{12a^2}x$$
+        则$w = u - v$
+        满足如下定解问题
+        \begin{equation*}
+        \begin{cases}
+           \frac{\partial^2 w}{\partial t^2} - a^2\frac{\partial^2 w}{\partial x^2} = 0 \quad x\in(0, l), \quad t>0\\
+           w(0, t) = w(l, t) = 0\\
+           w(x, 0) = -v(x), \frac{\partial w}{\partial t}(x, 0) = 0
+        \end{cases}      
+        \end{equation*}
+        类似的, 用分离变量法求解这个方程. 解得
+        \begin{equation*}
+            w(x, t) = \sum_{n=1}^{\infty}\left(C_n\sin{\frac{an\pi}{l}t} + D_n\cos{\frac{an\pi}{l}t}\right)\sin{\frac{n\pi}{l}x}
+        \end{equation*}
+        代入初始条件, 容易得到$C_n = 0$
+        $$ \sum_{n=1}^{\infty}D_n\sin\frac{n\pi}{l}x = -v(x)$$
+        由$-v(x)$的半幅傅里叶级数
+        $$ -v(x) = \sum_{n=1}^{\infty}E_n\sin\frac{n\pi}{l}x$$其中
+        \begin{equation*}
+            \begin{split}
+                E_n &= \frac{2}{l}\int_0^l-v(x)\sin\frac{n\pi}{l}x\ dx\\
+                &= -\frac{l^2}{n^2\pi^2a^2}\int_0^lv^{''}(x)\sin\frac{n\pi x}{l}\ dx\\
+                &= \left(\frac{l}{n\pi}\right)^5\frac{2b}{a^2}[(-1)^n-1]
+            \end{split}
+        \end{equation*}
+        对比得到
+        \begin{gather*}
+            D_n = 0, \quad n = 2k, k=1, 2, \cdots\\
+            D_{2k-1} = -\frac{4b}{a^2}\left(\frac{l}{n\pi}\right)^5, k=1, 2, \cdots
+        \end{gather*}
+    \end{solution}
+    
+    \begin{problem}{4}
+    \begin{equation*}
+       \begin{cases}
+           \frac{\partial^2 u}{\partial t^2} + 2h\frac{\partial u}{\partial t} = a^2\frac{\partial^2 u}{\partial x^2}, \quad x\in(0, l), \quad t>0\\
+           u(0, t) = u(l, t) = 0\\
+           u(x, 0) = \phi(x), \frac{\partial u}{\partial t}(x, 0) = \psi(x)
+       \end{cases}      
+    \end{equation*}
+    其中$h$是常数, $0 < h < \frac{\pi a}{l}$
+    \end{problem}  
+    \begin{solution}
+        这是一个带阻尼项的波动方程.
+        同样可以得到关于$X$的定解问题
+        $$
+        \begin{cases}
+            X^{''}(x) + \lambda X(x) = 0\\
+            X(0) = X(l) = 0
+        \end{cases}
+        $$
+        解得本征值和本征函数
+        $$ \lambda_n = \left(\frac{n\pi x}{l}\right)^2, X_n = B_n\sin{\left(\frac{n\pi x}{l}\right)x}$$
+        关于时间的函数$T$满足
+        $$ T^{''}(t) + 2hT^{'}(t) + \left(\frac{n\pi a}{l}\right)^2T(t) = 0$$
+        阻尼较小时, 即$0 < h < \frac{\pi a}{l}$,令
+        $$ q_n = \sqrt{\left(\frac{n\pi a}{l}\right)^2 - h^2}$$
+        解得
+        $$ T_n(t) = e^{-ht}\left(c_n\sin{q_nt} + d_n\cos{q_n t}\right)$$
+        由叠加原理得到方程的一般解
+        $$ u(x, t) = \sum_{n=1}^{\infty}e^{-ht}\left(C_n\sin{q_nt} + D_n\cos{q_n t}\right)\sin{\frac{n\pi}{l}x}$$
+        代入初始条件得
+        \begin{gather*}
+            \phi(x) = \sum_{n=1}^{\infty}D_n\sin\frac{n\pi}{l}x\\
+            \psi(x) = \sum_{n=1}^{\infty}\left(-hD_n + C_nq_n\right)
+        \end{gather*}
+        所以
+        \begin{gather*}
+            D_n = \frac{2}{l}\int_0^l\phi(x)\sin\frac{n\pi}{l}x\ dx\\
+            C_n = \frac{hD_n}{q_n} + \frac{2}{lq_n}\int_0^l\psi(x)\sin\frac{n\pi}{l}x\ dx
+        \end{gather*}
+        
+    \end{solution}
+\end{document}

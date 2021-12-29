@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK16}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+    
+    \begin{problem}{1}
+        用格林函数法求解
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial u}{\partial t} - a^2\frac{\partial^2 u}{\partial x^2} = A\sin{wt}, \quad 0 < x < l, t>0\\
+                    \frac{\partial u}{\partial x}(0, t) = \frac{\partial u}{\partial x}(l, t) = 0\\
+                    u(x, 0) = 0
+            \end{cases}
+        \end{equation*}
+    \end{problem}
+    \begin{solution}
+        设格林函数$G(x, t, \xi, \tau)$满足方程
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial G}{\partial t} - a^2\frac{\partial^2 G}{\partial x^2} = \delta(x-\xi)\delta(t-\tau), \quad 0 < x < l, t>0\\
+                    \frac{\partial G}{\partial x}(0, t) = \frac{\partial G}{\partial x}(l, t) = 0\\
+                    G(x, 0) = 0
+            \end{cases}
+        \end{equation*}
+        容易验证
+        $$ u(x, t) = \int_0^{\infty}\int_{-\infty}^{\infty}A\sin{w\tau}G(x, t, \xi, \tau)d\xi d\tau$$
+        是原方程的解。下面我们使用本征函数法求解上述关于格林函数的方程。边界条件对应的本征函数集为
+        $$ X_n(x) = A_n\cos\frac{n\pi}{l}x, n=0, 1, 2, \cdots$$
+        设方程解有如下形式
+        $$ G(x, t) = \sum_{n=0}^{\infty}g_n(t)\cos\frac{n\pi}{l}x$$
+        由初始条件可得
+        $$ g_n(0) = 0, n=0, 1, 2, \cdots$$
+        将上式代入方程易得
+        $$ \sum_{n=0}^{\infty}\left[g_n^{'}(t) + \left(\frac{an\pi}{l}\right)^2g_n(t)\right]\cos{\frac{n\pi}{l}x} = \delta(x-\xi)\delta(t-\tau)$$
+        设
+        $$ \delta(x-\xi)\delta(t-\tau) = \sum_{n=0}^{\infty}f_n(t)\cos{\frac{n\pi}{l}x}$$
+        容易得到
+        $$ f_n(t) = \frac{2}{l}\int_0^l\delta(x-\xi)\delta(t-\tau)\cos{\frac{n\pi}{l}x}dx = \frac{2}{l}\cos{\frac{n\pi\xi}{l}}\delta(t-\tau)$$
+        接下来需要求解定解问题
+        \begin{equation*}
+            \begin{cases}
+                    g_n^{'}(t) + \left(\frac{an\pi}{l}\right)^2g_n(t) = f_n(t)\\
+                    g_n(0) = 0
+            \end{cases}
+        \end{equation*}
+        有拉普拉斯变换及其性质易得
+        $$ pG_n(p) + \left(\frac{an\pi}{l}\right)^2G_n(p) = F_n(p)$$
+        解得
+        $$ G_n(p) = \frac{F_n(p)}{p + \left(\frac{an\pi}{l}\right)^2}$$
+        由拉普拉斯变换卷积的性质
+        $$ g_n(t) = \int_0^texp\left\{-\left(\frac{an\pi}{l}\right)^2(t-s)\right\}f_n(s)ds = \frac{2}{l}\cos{\frac{n\pi\xi}{l}}exp\left\{-\left(\frac{an\pi}{l}\right)^2(t-\tau)\right\}H(t-\tau)$$
+        其中$H$是Heaviside函数。
+    \end{solution}
+    
+    \begin{problem}{2}
+        用格林函数法求解
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial^2 u}{\partial t^2} - a^2\frac{\partial^2 u}{\partial x^2} = A\cos{\frac{x}{l}}\sin{wt}, \quad 0 < x < l, t>0\\
+                    \frac{\partial u}{\partial x}(0, t) = \frac{\partial u}{\partial x}(l, t) = 0\\
+                    u(x, 0) = \frac{\partial u}{\partial t}(x, 0) = 0
+            \end{cases}
+        \end{equation*}
+    \end{problem}
+    \begin{solution}
+        设格林函数$G(x, t, \xi, \tau)$满足方程
+        \begin{equation*}
+            \begin{cases}
+                    \frac{\partial^2 G}{\partial t^2} - a^2\frac{\partial^2 G}{\partial x^2} = \delta(x-\xi)\delta(t-\tau), \quad 0 < x < l, t>0\\
+                    \frac{\partial G}{\partial x}(0, t) = \frac{\partial G}{\partial x}(l, t) = 0\\
+                    G(x, 0) = \frac{\partial G}{\partial t}(x, 0) = 0
+            \end{cases}
+        \end{equation*}
+        容易验证
+        $$ u(x, t) = \int_0^{\infty}\int_{-\infty}^{\infty}A\cos{\frac{\xi}{l}}\sin{w\tau}G(x, t, \xi, \tau)d\xi d\tau$$
+        是原方程的解。同样地，我们使用本征函数法求解上述格林函数的方程，推到类似上题，可得
+        $$ \sum_{n=0}^{\infty}\left[g_n^{''}(t) + \left(\frac{an\pi}{l}\right)^2g_n(t)\right]\cos{\frac{n\pi}{l}x} = \delta(x-\xi)\delta(t-\tau)$$
+        且
+        $$ g_n(0) = g^{'}_n(0) = 0$$
+        同样的使用拉普拉斯变换得
+        $$ G_n(p) = \frac{F_n(p)}{p^2 + \left(\frac{an\pi}{l}\right)^2}$$
+        所以
+        $$ g_n(t) = \frac{2}{na\pi}\cos{\frac{n\pi\xi}{l}}\sin{\frac{na\pi}{l}(t-\tau)}H(t-\tau)$$
+    \end{solution}
+
+
+\end{document}

@@ -1,0 +1,120 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK09}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        计算下列积分
+        \begin{itemize}
+            \item[(1)] 
+            $$\int_0^{2\pi}\frac{dx}{(a+b\cos x)^2}, \quad a > b >0$$
+            \item[(2)] 
+            $$\int_0^{\pi}\frac{d\theta}{1 + \sin^2\theta}$$
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] 令$z = e^{ix}$, 则$\cos x = \frac{z + z^{-1}}{2}$, $dx = \frac{dz}{iz}$
+            \begin{equation*}\begin{split}
+                I &= \int_{|z|=1}\frac{1}{\left(a + b\frac{z + z^{-1}}{2}\right)^2}\frac{dz}{iz}\\
+                &= \frac{4}{ib^2}\int_{|z|=1}\frac{z}{\left(z^2 + \frac{2a}{b}z + 1\right)^2}\ dz\\
+                &= \frac{4}{ib^2}\int_{|z|=1}\frac{z}{(z-\alpha)^2(z-\beta)^2}\ dz
+            \end{split}\end{equation*}
+            其中
+            $$\alpha = \frac{-a + \sqrt{a^2-b^2}}{b}, \beta = \frac{-a - \sqrt{a^2 - b^2}}{b}$$
+            由二次方程根与系数的关系可知, $|\alpha\beta| = 1$, 显然有$|\beta| > |\alpha|$, 所以$|\alpha| < 1$, 于是单位圆内被积函数只有$\alpha$一个二阶级点
+            $$ Resf(\alpha)  =  -\frac{\alpha+\beta}{(\alpha-\beta)^3} = \frac{ab^3}{4b(a^2-b^2)^{3/2}}$$
+            所以有留数定理可得
+            $$I = \frac{2\pi a}{(a^2-b^2)^{3/2}}$$
+            
+            \item[(2)]显然
+            $$ \int_0^{\pi}\frac{d\theta}{1 + \sin^2\theta} = \int_0^{\pi}\frac{2}{3 - \cos2\theta}\ d\theta$$
+            令$z = e^{i2\theta}$, 则$\cos 2\theta = \frac{z + z^{-1}}{2}$, $d\theta = \frac{dz}{i2z}$
+            \begin{equation*}\begin{split}
+                I &= 2i\int_{|z|=1}\frac{1}{z^2 - 6z + 1}\ dz = \frac{i}{3}\\
+                &= 2i \cdot 2\pi i Resf(3-2\sqrt{2})\\
+                &= \frac{\pi}{\sqrt{2}}
+            \end{split}\end{equation*}
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{2}
+        计算下列积分
+        \begin{itemize}
+            \item[(1)] $$\int_0^{\infty}\frac{\cos x}{1 + x^4}\ dx$$
+            \item[(2)] $$\int_{-\infty}^{\infty}\frac{x\sin x}{x^2 - 2x + 2}\ dx$$
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] 由偶函数的性质
+            $$\int_0^{\infty}\frac{\cos x}{1 + x^4}\ dx = \frac{1}{2}\int_{-\infty}^{\infty}\frac{\cos x}{1 + x^4}\ dx$$
+            我们先计算$f(z) = \frac{e^{iz}}{1 + z^4}$在以$R$为半径的上半圆周上(包含直径，$R$足够大, 记为$\Gamma$)积分的值, 
+            $$ \int_{\Gamma}f(z)\ dz = \int_{C_R}f(z)\ dz + \int_{-R}^R\frac{\cos x}{1 + x^4}\ dx$$
+            由若尔当引理, $$ \lim_{R\to\infty}f(z) dz = 0 \Rightarrow \int_{C_R}f(z) = 0$$
+            由柯西留数定理
+            \begin{equation*}
+                    \int_{\Gamma}f(z)\ dz = 2\pi i \left(Resf(e^{i\pi/4}) + Resf(e^{i3\pi/4})\right) = \frac{\pi}{\sqrt{2}}e^{-\frac{1}{\sqrt{2}}}\left(\cos\frac{\sqrt{2}}{2} + \sin\frac{\sqrt{2}}{2}\right)
+            \end{equation*}
+            所以
+            $$ I = \frac{1}{2}Re\{\int_{-\infty}^{\infty}f(z)dz \}= \frac{\pi}{2\sqrt{2}}e^{-\frac{1}{\sqrt{2}}}\left(\cos\frac{\sqrt{2}}{2} + \sin\frac{\sqrt{2}}{2}\right)$$
+            \item[(2)]
+            令
+            $$ f(z) = \frac{ze^{iz}}{z^2 - 2z + 2} = \frac{ze^{iz}}{[z-(1+i)][z-(1-i)]}$$
+            由大圆弧引理易知, 
+            $$ \int_{C_R} f(z)dz = 0$$
+            利用留数定理
+            $$ \int_{\Gamma}f(z)dz = 2\pi iResf(1+i) = \pi(1+i)e^ie^{-1}$$
+            所以
+            $$ I = Img\{\int_{\Gamma}f(z)dz\} = \pi e^{-1}(\cos{1} + \sin{1})$$
+        \end{itemize}
+    \end{solution}
+
+    \begin{problem}{3}
+        计算下列积分
+        \begin{itemize}
+            \item[(1)]$$ \int_0^{\infty}\frac{x-\sin x}{x^3(1+x^2)}\ dx$$
+            \item[(2)]$$ \int_0^{\infty}\frac{x^{\alpha-1}\ln x}{1 + x}\ dx, \quad 0 < \alpha < 1$$
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] 令$f(z) = \frac{1 + iz -e^{iz}}{z^3(1+z^2)}$ 
+        \end{itemize}
+    \end{solution}
+
+\end{document}

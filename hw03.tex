@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue ,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK03}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        求~$Ln(-i)$~和~$Ln(-3+4i)$~的值及主值.
+    \end{problem}
+    \begin{solution}
+        由复数对数的定义~$Ln(z) = \ln{|z|} + i\arg(z)$~, 
+        \begin{gather*}
+            Ln(-i) = \ln1 + i(\frac{3\pi}{2} + 2k\pi) = i(\frac{3\pi}{2} + 2k\pi) \\
+            Ln(-3+4i) = \ln5 + i(\arctan\frac{-4}{3} + 2k\pi) 
+        \end{gather*}
+        选取辐角在~$[0, 2\pi)$~的一支为主值，则有~$\ln(-i) = i\frac{3\pi}{2}$~, ~$\ln(-3+4i) = \ln5 + i\arctan\frac{-4}{3}$~
+    \end{solution}
+    
+    \begin{problem}{2}
+        判断下列函数是单值还是多值. 如果是多值，求其支点.
+        \begin{itemize}
+            \item [(1)] ~$z+\sqrt{z-1}$~          
+            \item [(2)] ~$\frac{1}{1+Ln(z)}$~
+            \item [(3)] ~$\frac{\sin\sqrt{z}}{\sqrt{z}}$~
+            \item [(4)] ~$\sqrt{\frac{z-1}{z-2}}$~
+            \item [(5)] ~$\sqrt[3]{(z-a)(z-b)}$~
+            \item [(6)] ~$\sqrt{1-z^3}$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item [(1)] ~$\sqrt{z-1}$~是多值函数，~$ 1, \infty$~是它的支点，所以~$z+\sqrt{z-1}$~也是多值函数，同样有支点~$1, \infty$~;
+            \item [(2)] ~$Ln(z)$~是多值函数，~$ 0, \infty$~是它的支点，所以~$\frac{1}{1+Ln(z)}$~也是多值函数，同样有支点~$0, \infty$~;
+            \item [(3)] 引起多值性的只能是~$\sqrt{z}$~，当~$z$~沿着绕~$z=0$~的一个足够小的闭合曲线一周回到初始点时，~$\sqrt{z}$~的辐角增加了~$\pi$~, 即从~$\sqrt{z}$~这一支变到了~$-\sqrt{z}$~这一支，但是~$\frac{\sin(-\sqrt{z})}{-\sqrt{z}} = \frac{\sin\sqrt{z}}{\sqrt{z}}$~，函数值没有发生变化，所以它是单值函数;
+            \item [(4)]~$\sqrt{z-1}$~和~$\sqrt{z-2}$~都是多值函数，且支点分别为~$1， \infty$~和~$2, \infty$~, 所以它显然是多值函数且有支点~$1, 2$~. 同上小题一样分析，~$\infty$~不是它的支点;
+            \item [(5)] 多值函数，支点有~$a, b, \infty$~;
+            \item [(6)] 多值函数，支点有~$1, \frac{-1+\sqrt{3}i}{2}, \frac{-1-\sqrt{3}i}{2}, \infty$~
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{3}
+        计算积分~$\int_0^{1+i}x-y+ix^2 \ dz$~，积分路径是直线段.
+    \end{problem}
+    \begin{solution}
+        令~$\gamma(t) = t(1+i), 0\leq t\leq1$~，则有
+        \begin{equation*}
+            \int_0^{1+i}x-y+ix^2 \ dz=\int_0^1it^2(1+i)\ dt = \frac{i-1}{3}
+        \end{equation*}
+    \end{solution}
+    
+    \begin{problem}{4}
+        利用积分不等式，证明：
+        \begin{itemize}
+            \item [(1)] ~$|I| = \left|\int_{-i}^ix^2 + iy^2\ dz\right| \leq 2,$~ 积分路径是直线段.
+            \item [(2)] ~$|I| = \left|\int_{-i}^ix^2 + iy^2\ dz\right| \leq \pi,$~ 积分路径是连接~$-i$~到~$i$~的右半圆周.
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        有不等式：
+        \begin{equation*}
+            \left|\int_Cf(z)\ dz\right| \leq Ml
+        \end{equation*}
+        其中~$M=\sup_{z\in C}|f(z)|$~, ~$l$~是~$C$~的长度.
+        \begin{itemize}
+            \item[(1)]~$M = sup_{z\in C}|x^2+iy| = \max_{y\in[-1, 1]}|y| = 1$~, ~$|I| \leq 2$~
+            \item[(2)]~$M = sup_{z\in C}|x^2+iy| \leq |x^2|+|iy^2| = x^2 + y^2 = 1, $~, ~$|I| \leq 1 \times \pi = \pi $~
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{5}
+        计算积分~$\int_{-1}^1|z| \ dz, $~积分路径是：
+        \begin{itemize}
+            \item [(1)] 直线段
+            \item [(2)] 单位圆周的下半
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item [(1)] ~$z = \gamma(t) = t, -1 \leq t\leq 1$~, 
+            \begin{equation*}
+                I = \int_{-1}^1|t|\ dt = 1
+            \end{equation*}
+            \item [(2)] ~$z = \gamma(\theta) = e^{i\theta}, -\pi \leq \theta\leq \pi$~,
+            \begin{equation*}
+                I = \int_{-\pi}^{0} d(e^{i\theta}) = e^{i\theta}\bigg|_{-\pi}^{0} = 2 
+            \end{equation*}
+        \end{itemize}
+    \end{solution}
+\end{document}

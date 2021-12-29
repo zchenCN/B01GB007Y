@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\usepackage{indentfirst}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        判断下列函数在何处可导（并求出），何处解析
+        \begin{item}
+            \item[(1)] $zRe(z)$
+            \item[(2)] $3x^2 + 2iy^3$
+            \item[(3)] $|z|$
+        \end{item}
+    \end{problem}
+    
+    \begin{solution}
+    复变函数在一个点可导的充分必要条件是实部和虚部可微且偏导数满足Cauchy-Riemann方程~$u_x=v_y, u_y=-v_x$~, 且导数~$f'(z)=u_x+iv_x=v_y-iu_y$~. 如果~$f(z)$~在一个区域（连通开集）内处处可导，我们称它在这个区域解析.
+    \begin{itemize}
+        \item[(1)] 令~$z=x+iy$~, 则~$f(z)=u(x,y)+iv(x,y)=(x+iy)x,$~ 所以有~$u=x^2, v=xy, $~显然$u, v$在任意~$(x, y)$~处都是可微的, 且有~$u_x=2x, u_y=0, v_x=y, v_y=x, $~代入C-R方程可得~$x=0, y=0$~ . 所以~$f(z)$~在~$0$~处可导, ~$f'(0)=u_x+iv_x|_{x=0, y=0}=0$~. 不存在解析的区域.
+        
+        \item[(2)] ~$f(z)=u+iv=3x^2+2iy^3,$~所以有~$u=3x^2, v=2y^3,$~显然它们对任意~$(x, y)$~都可微且有偏导数~$u_x=6x, u_y=0, v_x=0, v_y=6y^2$~, 代入C-R方程可得~$x=y^2$~所以~$f(z)$~在~$\{z=x+iy:x=y^2\}$~上可导. ~$f'(z)=u_x+iv_x=6x=6Re(z)$~. 不存在解析的区域.
+        
+        \item[(3)]同样令~$z=x+iy$~, ~$f(z)=\sqrt{x^2+y^2}$~, 显然有~$u=\sqrt{x^2+y^2}, v=0$~, 可知~$u$~在除~$(0, 0)$~外的点上都可微, ~$v$~在全平面可微. 在~$(0, 0)$~之外~$u_x = \frac{x}{\sqrt{x^2+y^2}}, v_y=0,$~ 容易发现无法满足C-R方程. 所以~$f(z)$~在全平面都不可导，自然也不存在解析区域.
+    \end{itemize}
+    \end{solution}
+    
+    
+    \begin{problem}{2}
+        证明平面极坐标系~$(r, \theta)$~下的C-R条件为
+        \begin{equation*}
+            \frac{\partial u}{\partial r} = \frac{1}{r}\frac{\partial v}{\partial \theta}, \quad \frac{\partial v}{\partial r} = -\frac{1}{r}\frac{\partial u}{\partial \theta}
+        \end{equation*}
+    \end{problem}
+
+    \begin{solution}
+    直角坐标系下的C-R条件为~$u_x=v_y, u_y=-v_x$~. 我们即要证明上式与之等价.\\
+    "$\Rightarrow$:" $u_r = u_xx_r+u_yy_r=\cos\theta u_x+ u_y\sin\theta $, $v_{\theta}=v_xx_{\theta}+v_yy_{\theta} = v_x(-r\sin\theta) + v_y(r\cos\theta)$, 容易验证上式第一部分成立. 同样的可以验证第二部分. \\
+    "$\Leftarrow:$" $u_x = u_rr_x+u_{\theta}\theta_x=\frac{x}{\sqrt{x^2+y^2}}u_r-\frac{y}{\sqrt{x^2+y^2}}u_{\theta}$,$v_y=v_rr_y+v_{\theta}\theta_y=\frac{y}{\sqrt{x^2+y^2}}v_r+\frac{x}{x^2+y^2}v_{\theta}$, 代入验证即可.
+    \end{solution}
+    
+    
+    \begin{problem}{3}
+        已知解析函数的实部或者虚部，求解析函数
+        \begin{itemize}
+            \item[(1)] $u = 2(x-1)y, f(2) = -i$
+            \item[(2)] $v=\frac{y}{x^2+y^2}, f(2)=0$
+            \item[(3)] $u - v = (x-y)(x^2+4xy+y^2)$
+        \end{itemize}
+    \end{problem}
+    
+    \begin{itemize}
+        \item[(1)] 由C-R方程可知, ~$v_x = -u_y = -2(x-1), v_y=u_x=2y$~, 所以有~$dv=v_xdx+v_ydy=-2(x-1)dx+2ydy$~, 所以~$v=-x^2+2x+y^2+const, $~代入有~$f(2)=i\cdot const=-i, $~所以~$const=-1$~, ~$f(z)=2(x-1)y+i(-x^2+2x+y^2-1).$~
+        
+        \item[(2)] 同样的， ~$du=u_xdx+u_ydy=v_ydx-v_xdy=\frac{x^2-y^2}{(x^2+y^2)^2}dx+\frac{2xy}{(x^2+y^2)^2}dy$~, 可以得到~$u=\frac{-x}{x^2+y^2}+const.$~ 则~$f(2)=\frac{-1}{2}+const=0$~, 所以~$const=\frac{1}{2}$~, ~$f(z)=\frac{-x}{x^2+y^2}+\frac{1}{2}+ i\frac{y}{x^2+y^2}+const$~
+        
+        \item[(3)]
+        $u_x+u_y=u_x-v_x=3(x^2+2xy-y^2)$, $u_y-u_x = u_y-v_y = 3(x^2-2xy-y^2)$, 可以解得~$u_x = 6xy, u_y=3(x^2-y^2)$~, 那么~$du=d_xdx+u_ydy=6xydx+3(x^2-y^2)dy,$~所以~$u=3x^2y-y^3+const_1$~; 同样的方法，可以解得~$v_x=3(y^2-x^2), v_y=6xy, v=3xy^2-x^3+const_2$~; 因为~$u-v$~没有常数项，所以~$const_1=const_2=const$~, 所以~$f(z) = 3x^2y-y^3+const + i(3xy^2-x^3+const)$~
+    \end{itemize}
+
+\end{document}

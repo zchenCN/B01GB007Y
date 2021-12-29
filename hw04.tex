@@ -1,0 +1,101 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK04}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        计算积分~$\oint_c\frac{\bar{z}}{|z|} \ dz,$~ 其中~$c$~为正向圆周
+        \begin{itemize}
+            \item [(1)] ~$|z| = 3$~
+            \item [(2)] ~$|z| = 4$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{equation*}
+            \oint_{|z|=r}\frac{\bar{z}}{|z|} \ dz = \int_0^{2\pi}\frac{re^{-i\theta}}{r}ire^{i\theta}\ d\theta = ir\int_0^{2\pi}d\theta = i2\pi r
+        \end{equation*}
+    \end{solution}
+
+    \begin{problem}{2}
+        计算~$\oint_c\frac{1}{z^2-z} \ dz,$~ 其中~$c$~为包含圆周~$|z|=1$~在内的任何正向简单闭曲线.
+    \end{problem}
+    \begin{solution}
+        容易证明~$\int_{|z-a|=r}\frac{dz}{z-a} = 2\pi i$~
+        由柯西定理可知：
+        \begin{equation*}
+            \oint_c\frac{1}{z^2-z} \ dz = \oint_{|z-1|=r}\frac{1}{z^2-z} \ dz = \oint_{|z-1|=r}\frac{1}{z-1} - \oint_{|z-1|=r}\frac{1}{z} \ dz =2\pi i -2\pi i = 0
+        \end{equation*}
+    \end{solution}
+
+    \begin{problem}{3}
+        计算下列积分：
+        \begin{itemize}
+            \item [(1)] ~$\oint_{|z|=3}\frac{dz}{z^2 + 2z + 3}$~
+            \item [(2)] ~$\oint_{|z|=1}\frac{dz}{\cos z}$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)] 假设~$z^2+2z+3 = (z-z_1)(z-z_2)$~
+            \begin{equation*}
+                I = \oint_{|z|=3}\frac{dz}{(z-z_1)(z-z_2)} = \frac{1}{z_1-z_2}\oint_{|z|=3}\frac{1}{z-z_1}-\frac{1}{z-z_2}\ dz =0
+            \end{equation*}
+            \item[(2)]由柯西定理可知为0
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{4}
+        计算~$\oint_l\frac{dz}{(z-a)(z-b)} \ dz,$~ ~$l$~是包围~$a, b$~两点的圆周
+    \end{problem}
+    \begin{solution}
+        同上题
+    \end{solution}
+    
+    \begin{problem}{5}
+        计算：
+        \begin{itemize}
+            \item [(1)] ~$\int_{-2}^{-2+i}(z+2)^2\ dz$~
+            \item [(2)] ~$\int_0^{\pi+2i}\cos\frac{z}{2}\ dz$~
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item [(1)] ~$\int_{-2}^{-2+i}(z+2)^2\ dz = \frac{(z+2)^3}{3}\bigg|_{-2}^{-2+i} = \frac{-3i}{3}$~
+            \item [(2)] ~$\int_0^{\pi+2i}\cos\frac{z}{2}\ dz = 2\sin\frac{z}{2}\bigg|_0^{\pi+2i} = 2\sin(\frac{\pi}{2}+i) = e+e^{-1}$~
+        \end{itemize}
+    \end{solution}
+\end{document}

@@ -1,0 +1,228 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[UTF8]{ctex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}{\noindent \textbf{Solution}:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{} 
+\chead{\textbf{HOMEWORK11}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+    \begin{problem}{1}
+        求下列函数的傅里叶变换
+        \begin{itemize}
+            \item[(1)] $e^{-|t|}$
+            \item[(2)] $\delta^{'}(t)$
+            \item[(3)] $1-\delta(t-1)+\delta^{''}(t+1)$
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)]
+            \begin{equation*}
+                \begin{split}
+                    \hat{F}(w) &= \int_{-\infty}^{\infty}e^{-|t|}e^{-iwt}\ dt\\
+                    &= \int_{-\infty}^{0}e^{t}e^{-iwt}\ dt + \int_{0}^{\infty}e^{-t}e^{-iwt}\ dt\\
+                    &= \frac{e^{(1-iw)t}}{1-iw}\bigg|_{-\infty}^0 + \frac{e^{(-1-iw)t}}{-1-iw}\bigg|_{0}^{\infty}\\
+                    &= \frac{1}{1-iw} + \frac{1}{1 + iw}\\
+                    &= \frac{2}{1+w^2}
+                \end{split}
+            \end{equation*}
+            \item[(2)]
+            \begin{equation*}
+                \begin{split}
+                    \hat{F}(w) &= \int_{-\infty}^{\infty}\delta^{'}(t)e^{-iwt}\ dt\\
+                    &= -\int_{-\infty}^{\infty}\delta(t)\left(e^{-iwt}\right)^{'}\ dt\\
+                    &= iw\int_{-\infty}^{\infty}\delta(t)e^{-iwt}\ dt\\
+                    &= iw
+                \end{split}
+            \end{equation*}
+            \item[(3)]
+            \begin{equation}
+                \begin{split}
+                    \hat{F}(w) &= \int_{-\infty}^{\infty}e^{-iwt}\ dt - \int_{-\infty}^{\infty}\delta(t-1)e^{-iwt}\ dt + \int_{-\infty}^{\infty}\delta^{''}(t+1)e^{-iwt}\ dt\\
+                    &= 2\pi\delta(w) - e^{-iw} + \int_{-\infty}^{\infty}\delta(t+1)\left(e^{-iwt}\right)^{''}\ dt\\
+                    &= 2\pi\delta(w) - e^{-iw} -w^2 \int_{-\infty}^{\infty}\delta(t+1)e^{-iwt}\ dt\\
+                    &= 2\pi\delta(w) - e^{-iw} -w^2e^{iw}
+                \end{split}
+            \end{equation}
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{2}
+        求证$F(w) = \delta(w+1) - \delta(w-1)$的傅里叶逆变换为$f(t) = \frac{\sin t}{\pi i}$
+    \end{problem}
+    \begin{solution}
+        \begin{equation}
+            \begin{split}
+                f(t) &= \frac{1}{2\pi}\int_{-\infty}^{\infty}F(w)e^{iwt}\ dw\\
+                &= \frac{1}{2\pi}\int_{-\infty}^{\infty}\left(\delta(w+1)-\delta(w-1)\right)e^{iwt}\ dw\\
+                &= \frac{1}{2\pi} \left(e^{-it} - e^{it}\right)\\
+                &= \frac{1}{2\pi}\times(-2i\sin t)\\
+                &= \frac{\sin t}{\pi i}
+            \end{split}
+        \end{equation}
+    \end{solution}
+    
+    \begin{problem}{3}
+        求下列函数的拉普拉斯变换
+        \begin{itemize}
+            \item[(1)] $t^n, n=0, 1, \cdots$
+            \item[(2)] $e^{\lambda t}\sin wt, \lambda > 0, w > 0$
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)]记$I_n = \bar{f}(p) = \int_0^{\infty}t^ne^{-pt}\ dt$, 利用分部积分公式有
+            \begin{equation*}
+                \begin{split}
+                    I_{n-1} &= \int_0^{\infty}t^{n-1}e^{-pt}\ dt\\
+                    &= \frac{p}{n}\int_{0}^{\infty}t^ne^{-pt}\ dt\\
+                    &= \frac{p}{n}I_n
+                \end{split}
+            \end{equation*}
+            所以有
+            $$ \bar{f}(p) = I_n = \frac{n!}{p^n}I_0 = \frac{n!}{p^{n+1}}$$
+            或者利用Gamma函数
+            \begin{equation*}
+                \begin{split}
+                    \bar{f}(p) &= \int_0^{\infty}t^{n}e^{-pt}\ dt\\
+                    &= \frac{1}{p^{n+1}}\int_0^{\infty}(pt)^ne^{-pt}\ d(pt)\\
+                    &= \frac{\Gamma(n+1)}{p^{n+1}}\\
+                    &= \frac{n!}{p^{n+1}}
+                \end{split}
+            \end{equation*}
+            或者利用导数的拉普拉变换的性质
+            $$ L[(t^n)^{(n)}] = L[n!] = p^n\bar{f}(p) - p^{m-1}f(0) -p^{m-2}f^{'}(0)-\cdots-f^{(n-1)}(0) = p^nL[t^n] $$
+            所以
+            $$ L[t^n] = \frac{1}{p^n}L[n!] = \frac{n!}{p^{n+1}}$$
+            \item[(2)]记$I = \bar{f}(p) = \int_0^{\infty}e^{\lambda t}\sin wt\cot e^{-pt}\ dt = \int_0^{\infty}\sin wt\cdot e^{(\lambda - p)t}\ dt$, 利用分部积分公式
+            \begin{equation*}
+                \begin{split}
+                    I &= \int_0^{\infty}\sin wt\cdot e^{(\lambda - p)t}\ dt\\
+                    &= \frac{-w}{\lambda - p}\int_0^{\infty}\cos wt\cdot e^{(\lambda-p)t}\ dt\\
+                    &=\frac{-w}{(\lambda - p)^2}\left(-1+w\int_0^{\infty}\sin wt\cdot e^{(\lambda-p)t}\ dt\right)\\
+                    &= \frac{-w}{(\lambda - p)^2}(- 1+wI)
+                \end{split}
+            \end{equation*}
+            解得
+            $$ \bar{f}(p) = I = \frac{w}{(\lambda-p)^2 + w^2}$$
+            或者利用拉普拉斯变换的平移性质和$L[\sin wt](p)=\frac{w}{p^2+w^2}$, 有$$ L[e^{\lambda t}\sin wt](p) = L[\sin wt](p-\lambda) = \frac{w}{(\lambda-p)^2 + w^2}$$
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{4}
+        求下列函数的拉普拉斯逆变换
+        \begin{itemize}
+            \item[(1)] $\frac{a^3}{p(p+a)^3} $
+            \item[(2)] $\frac{w}{p(p^2+w^2)}, w >0$
+            \item[(3)] $\frac{e^{-p\tau}}{p^2}, \tau>0$
+        \end{itemize}
+    \end{problem}
+    \begin{solution}
+        我们一般利用已知简单函数的拉普拉斯变化和拉普拉斯变换的性质来计算拉普拉斯逆变换.
+        \begin{itemize}
+            \item[(1)]可知$$L[1] = \frac{1}{p}, L[t^2] = \frac{2}{p^3}, L[e^{-at}t^2] = \frac{2}{(p+a)^3} $$
+            所以有
+            $$ \frac{a^3}{p(p+a)^3} = L[a^3]\cdot L[\frac{1}{2}e^{-at}t^2]$$
+            利用卷积的拉普拉斯变换的性质
+            $$L^{-1}[\frac{a^3}{p(p+a)^3}] = \int_0^t\frac{a^3}{2}e^{-a\tau}\tau^2\ d\tau=1-\left(1+at+\frac{1}{2}a^2t^2\right)e^{-at}$$
+            \item[(2)]
+            容易看出
+            $$ \frac{w}{p(p^2+w^2)} = L[1]\cdot L[\sin wt]$$
+            所以
+            $$ L^{-1}[\frac{w}{p(p^2+w^2)}] = \int_0^t\sin w\tau\ d\tau = \frac{1-\cos wt}{w}$$
+            \item[(3)]
+            利用拉普拉斯变化的延迟性质
+            $$ L[t-\tau] = e^{-\tau p}L[t] = \frac{e^{-p\tau}}{p^2}$$
+            所以
+            $$ L[\frac{e^{-p\tau}}{p^2}] = t-\tau$$
+        \end{itemize}
+    \end{solution}
+    
+    \begin{problem}{5}
+        求下列方程的通解
+        \begin{itemize} 
+            \item[(1)] $3y^{'} + 2y = 6x$
+            \item[(2)] $y - x y^{'} = a(y^2+y^{'})$
+            \item[(3)] $2y^{''} + y^{'} - y = 2e^x$
+            \item[(4)] $y^{''} - 6y^{'} + 9y = (x+1)e^{3x}$
+            \item[(5)] $y^{''} - 2y^{'} + 5y = e^x\sin x$
+        \end{itemize}
+    \end{problem}
+
+    \begin{solution}
+        \begin{itemize}
+            \item[(1)]方程对应齐次方程为~$3y^{'} + 2y = 0$~, 易求得通解为~$y(x) = Ce^{-\frac{2}{3}x}$~. 利用常数变异法, 假设$y(x)=c(x)e^{-\frac{2}{3}x}$是非齐次方程的一个特解, 代入原方程可得
+            $$ C(x) = \left(3x-\frac{9}{2}\right)e^{\frac{2}{3}x}$$ 所以得到非齐次方程的特解为~$y(x)=3x-\frac{9}{2}$~, 所以方程的通解为
+            $$ y(x) = 3x-\frac{9}{2} + Ce^{-\frac{2}{3}x}$$
+            或者使用积分因子法, 在方程左右两端同时乘上积分因子~$e^{\frac{2}{3}x}$~, 可得
+            $$ \frac{d}{dx}\left(e^{\frac{2}{3}x}\right) = e^{\frac{2}{3}x}\left(y^{'}(x) + \frac{2}{3}y(x)\right) = 2xe^{\frac{2}{3}x}$$
+            通过求不定积分可以解得
+            $$ e^{\frac{2}{3}x}y(x) = \left(3x-\frac{9}{2}\right)e^{\frac{2}{3}x} + C$$
+            所以同样求到
+            $$ y(x) = 3x-\frac{9}{2} + Ce^{-\frac{2}{3}x}$$
+            \item[(2)]这是一个可分离变量的一阶非线性常微分方程, 分离变量得
+            $$ \frac{dy}{y-ay^2} = \frac{dx}{a+x}$$
+            求不定积分可得
+            $$ \int \frac{dy}{y-ay^2} =\int \frac{1}{y} + \frac{1}{\frac{1}{a}-y} = \ln\left|\frac{y}{\frac{1}{a}-y}\right| + C$$
+            同样的对$x$也求不定积分得到
+            $$ \ln\left|\frac{y}{\frac{1}{a}-y}\right| = \ln|a+x| + C$$
+            解得
+            $$ y(x) = \frac{a + x}{a(x + C + a)}$$
+            \item[(3)]对应齐次方程的特征方程为
+            $$ 2\lambda^2 + \lambda - 1 = (2\lambda-1)(\lambda+1)=0$$
+            解得它的两个实根分别为~$\lambda_1 =\frac{1}{2}, \lambda_2 = -1$~, 所以齐次方程的通解为
+            $$ y(x) = C_1e^{\frac{1}{2}x} + C_2e^{-x}$$
+            容易看出~$y(x) = e^x$~是非齐次方程的一个特解, 所以对原方程的通解为
+            $$ y(x) = C_1e^{\frac{1}{2}x} + C_2e^{-x} + e^x$$
+            \item[(4)]对应齐次方程的特征方程为
+            $$ \lambda^2 -6 \lambda + 9 = (\lambda-3)^2=0$$
+            解得它的两个相等的实根为~$\lambda_1 =\lambda_2 = 3$~, 所以齐次方程的通解为
+            $$ y(x) = e^{3x}(C_1 + C_2x)$$
+            假设原方程的一个特解有~$x^2(ax+b)e^{3x}$~的形式, 代入原方程解得
+            $$ a = \frac{1}{6}, b = \frac{1}{2}$$
+            所以原方程的通解为
+            $$ y(x) = e^{3x}(C_1 + C_2x) + x^2\left(\frac{1}{6}x + \frac{1}{2} \right)e^{3x}$$
+            \item[(5)]对应齐次方程的特征方程为
+            $$ \lambda^2 -2 \lambda + 5= 0$$
+            解得它的两个共轭的复根为~$\lambda_1 =1+2i, \lambda_2 = 1-2i$~, 所以齐次方程的通解为
+            $$ y(x) = e^{x}(C_1\cos3x + C_2\sin2x)$$
+            假设原方程的一特解有~$y(x) = e^x(a\sin x + b\cos x)$~的形式, 代入原方程解得
+            $$ a = \frac{1}{3}, b = 0$$
+            所以原方程的通解为
+            $$ y(x) = e^{x}(C_1\cos3x + C_2\sin2x) + \frac{1}{3}e^x\sin x$$
+            
+        \end{itemize}
+    \end{solution}
+
+\end{document}
